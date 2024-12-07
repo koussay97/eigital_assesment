@@ -61,7 +61,6 @@ class _AdaptivePanelWidgetState extends State<AdaptivePanelWidget> with SingleTi
                 AnimatedBuilder(
                     animation: animation,
                     child: widget.leftPanelWidgetContent!,
-
                     builder: (context,child,) {
                       return SizedBox(
                         width: (MediaQuery.sizeOf(context).width/22)*animation.value,

@@ -78,7 +78,7 @@ class _TabBarComponentState extends State<TabBarComponent>
           height: 30,
         ),
         Container(
-          height: SizeConfig.getDynamicBlocSize(context: context) * 20,
+         // height: SizeConfig.getDynamicBlocSize(context: context) * 40,
           padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
@@ -174,9 +174,10 @@ class TabViewItem extends StatelessWidget {
                     ))
               ],
             )),
-        VerticalDivider(
-          color: AppColors.cardSecondaryLabelColor,
-        ),
+        CustomVerticalDivider(
+          height: SizeConfig.getDynamicBlocSize(context: context)*25,
+          color:AppColors.cardSecondaryLabelColor ,thickness: 1,),
+         SizedBox(width: SizeConfig.getDynamicBlocSize(context: context)*2,),
         Expanded(
             flex: 7,
             child: Column(
@@ -190,13 +191,17 @@ class TabViewItem extends StatelessWidget {
                 SizedBox(
                   height: SizeConfig.getDynamicBlocSize(context: context),
                 ),
-                const TabViewMidSectionLowerCards()
+                 TabViewMidSectionLowerCards(
+                  theme: currentTheme,
+                   scaleFactor: scaleFactor,
+                )
               ],
             )),
         showRightPortion
-            ? VerticalDivider(
-                color: AppColors.cardSecondaryLabelColor,
-              )
+            ? CustomVerticalDivider(
+          height: SizeConfig.getDynamicBlocSize(context: context)*25,
+          color:AppColors.cardSecondaryLabelColor ,thickness: 1,)
+
             : const SizedBox.shrink(),
         showRightPortion
             ? Expanded(flex: 3, child: Container())
@@ -207,7 +212,9 @@ class TabViewItem extends StatelessWidget {
 }
 
 class TabViewMidSectionLowerCards extends StatelessWidget {
-  const TabViewMidSectionLowerCards({super.key});
+  final ThemeData theme;
+  final double? scaleFactor;
+  const TabViewMidSectionLowerCards({super.key, required this.theme, this.scaleFactor});
 
   @override
   Widget build(BuildContext context) {
@@ -216,19 +223,10 @@ class TabViewMidSectionLowerCards extends StatelessWidget {
         Expanded(
             flex: 16,
             child: InnerCard(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [],
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return VerticalDivider(
-                      color: AppColors.cardLabelColor,
-                    );
-                  },
-                  itemCount: 4),
+              child: OverViewCardContent(
+                theme: theme,
+                scaleFactor: scaleFactor,
+              ),
             )),
         const Expanded(flex: 1, child: SizedBox()),
         Expanded(
@@ -247,6 +245,79 @@ class TabViewMidSectionLowerCards extends StatelessWidget {
     );
   }
 }
+
+// first bottom card
+class OverViewCardContent extends StatelessWidget {
+  final ThemeData theme;
+ final double? scaleFactor;
+  const OverViewCardContent({super.key, required this.theme, this.scaleFactor});
+
+  static List<Map<String, dynamic>> data = [
+    {'Loyalty NO': 'RF|'},
+    {'Customer Since': DateTime( 2010,2, 10)},
+    {'Birth Date': '--'},
+    {'Anniversary': DateTime( 2003,11, 11)},
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    overflow: TextOverflow.ellipsis,
+                    textScaler:TextScaler.linear((scaleFactor??1)) ,
+                    data[index].keys.first,
+                    style: theme.textTheme.labelMedium
+                        ?.copyWith(color: AppColors.mainPrimaryBlack),
+                  ),
+                ),
+                Text(
+                  overflow: TextOverflow.ellipsis,
+                  textScaler:TextScaler.linear((scaleFactor??1)) ,
+                  data[index].values.first,
+                  style: theme.textTheme.labelLarge
+                      ?.copyWith(color: AppColors.mainPrimaryBlack),
+                )
+              ],
+            );
+          }
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Text(overflow: TextOverflow.ellipsis,
+
+                  textScaler:TextScaler.linear((scaleFactor??1)) ,
+                  data[index].keys.first,
+                  style: theme.textTheme.labelMedium
+                      ?.copyWith(color: AppColors.mainPrimaryBlack),
+                ),
+              ),
+             Text(
+               overflow: TextOverflow.ellipsis,
+               textScaler:TextScaler.linear((scaleFactor??1)) ,
+               (DateTime.tryParse(data[index].values.first.toString())==null? 'Enter':formatDate(date: data[index].values.first as DateTime)),
+               style: theme.textTheme.labelMedium
+                   ?.copyWith(color: AppColors.cardSecondaryLabelColor),
+             )
+            ],
+          );
+        },
+        separatorBuilder: (context, index) {
+          return Divider(
+            color: AppColors.cardSecondaryLabelColor,
+          );
+        },
+        itemCount: data.length);
+  }
+}
+
 
 class TabViewMidSectionUpperCard extends StatelessWidget {
   final ThemeData theme;
@@ -342,13 +413,18 @@ class InnerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      constraints: BoxConstraints(maxHeight: SizeConfig.getDynamicBlocSize(context: context)*15),
       padding: EdgeInsets.all(SizeConfig.getDynamicBlocSize(context: context)),
       decoration: BoxDecoration(
         color: AppColors.cardsBackground,
         borderRadius:
             BorderRadius.circular(AssetAccessor.cardRadius(context: context)),
       ),
-      child: child,
+      child: Column(
+        children: [
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }
@@ -405,6 +481,21 @@ class DataKeyValVertical extends StatelessWidget {
 
 String formatDate({required DateTime? date}) {
   String formatted =
-      '${date?.day ?? '--'} ${date?.month ?? '--'} ${date?.day ?? '--'}';
+      '${date?.day ?? '--'} ${date?.month ?? '--'} ${date?.year ?? '--'}';
   return formatted;
+}
+class CustomVerticalDivider extends StatelessWidget {
+  final Color color;
+  final double thickness;
+  final double height;
+  const CustomVerticalDivider({super.key,required this.height ,required this.color, required this.thickness});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: thickness,
+      color: color,
+    );
+  }
 }
