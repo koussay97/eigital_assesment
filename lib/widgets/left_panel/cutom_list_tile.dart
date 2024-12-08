@@ -22,14 +22,13 @@ class CustomListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
 
+      radius: AssetAccessor.cardRadius(context: context),
       onTap: (){
         BlocProvider.of<AppBloc>(context).add(PickUser(userId: user.id));
       },
       child: Container(
         decoration: BoxDecoration(
-          color: user.selected
-              ? AppColors.cardSecondaryLabelColor
-              : AppColors.mainBackground,
+
           borderRadius:
           BorderRadius.circular(AssetAccessor.cardRadius(context: context)),
         ),

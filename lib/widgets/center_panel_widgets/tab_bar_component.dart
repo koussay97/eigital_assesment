@@ -18,11 +18,14 @@ class _TabBarComponentState extends State<TabBarComponent>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
 
+  late int tabIndex;
   @override
   void initState() {
+    tabIndex = 0;
     tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
+
 
   static List<String> tabs = [
     "Profile",
@@ -39,12 +42,18 @@ class _TabBarComponentState extends State<TabBarComponent>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
+
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(
                   AssetAccessor.cardRadius(context: context))),
           child: TabBar(
+            onTap: (index){
+              setState(() {
+                tabIndex=index;
+              });
+            },
             physics: const NeverScrollableScrollPhysics(),
             isScrollable: true,
             unselectedLabelColor: AppColors.mainPrimaryBlack,
@@ -79,33 +88,74 @@ class _TabBarComponentState extends State<TabBarComponent>
         const SizedBox(
           height: 30,
         ),
-        Container(
-         // height: SizeConfig.getDynamicBlocSize(context: context) * 40,
-          padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-                AssetAccessor.cardRadius(context: context)),
-            color: AppColors.cardsHighlightColor,
-          ),
-          child: TabViewItem(
-            showRightPortion: false,
-            fill: true,
-            currentTheme: currentTheme,
-            scaleFactor: widget.scaleFactor,
-          ),
+        SizedBox(
+          height: SizeConfig.getDynamicBlocSize(context: context)*30,
+          child: TabBarView(
+            controller: tabController,
+              children: [
+                TapViewItemCard(
+                  tabContent: ProfileTabViewItem(
+                    showRightPortion: false,
+                    fill: true,
+                    currentTheme: currentTheme,
+                    scaleFactor: widget.scaleFactor,
+                  ),
+                ),
+                 TapViewItemCard(
+                  tabContent: Center(
+                    child: Text('${tabs[tabIndex]}'),
+                  ),
+                ),
+                TapViewItemCard(
+                  tabContent: Center(
+                    child: Text('${tabs[tabIndex]}'),
+                  ),
+                ),
+                TapViewItemCard(
+                  tabContent: Center(
+                    child: Text('${tabs[tabIndex]}'),
+                  ),
+                ),
+                TapViewItemCard(
+                  tabContent: Center(
+                    child: Text('${tabs[tabIndex]}'),
+                  ),
+                ),
+              ]),
         ),
+
       ],
     );
   }
 }
 
-class TabViewItem extends StatelessWidget {
+class TapViewItemCard extends StatelessWidget {
+  final Widget? tabContent;
+  const TapViewItemCard({super.key, this.tabContent});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+            AssetAccessor.cardRadius(context: context)),
+        color: AppColors.cardsHighlightColor,
+      ),
+      child: tabContent,
+    );
+  }
+}
+
+
+
+class ProfileTabViewItem extends StatelessWidget {
   final ThemeData currentTheme;
   final bool fill;
   final bool showRightPortion;
   final double? scaleFactor;
 
-  const TabViewItem(
+  const ProfileTabViewItem(
       {super.key,
       required this.fill,
       this.scaleFactor,
