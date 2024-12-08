@@ -1,12 +1,12 @@
 import 'package:eigital_assessment/core/brand_guideline/brand_guideline.dart';
 import 'package:eigital_assessment/core/responsive_layout/responsive_componenet.dart';
 import 'package:eigital_assessment/widgets/center_pan.dart';
-import 'package:eigital_assessment/widgets/pan_body.dart';
+import 'package:eigital_assessment/widgets/adaptive_pan.dart';
 import 'package:eigital_assessment/widgets/side_bar_menu.dart';
 import 'package:eigital_assessment/widgets/top_app_bar.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/left_pan_content.dart';
+import 'widgets/left_panel/left_pan_content.dart';
 
 class ResponsivePan extends StatelessWidget {
   const ResponsivePan({super.key});
@@ -21,14 +21,14 @@ static  GlobalKey<ScaffoldState> scaffoldKey =GlobalKey<ScaffoldState>();
           onTapMenuBtn: (){
             scaffoldKey.currentState?.openDrawer();
           },
-          height:SizeConfig.getDynamicBlocSize(context: context)*10,textScaler: 1.8,),
+          height:SizeConfig.getDynamicBlocSize(context: context)*10,textScaler: 1.5,),
         numberOfColumns: 1,
         centerPanelWidgetContent: Center(),
         leftPanExpanded: true,
       ),
 
       androidTablet: AdaptivePanelWidget(
-        topMenu: ApplicationBar(height:SizeConfig.getDynamicBlocSize(context: context)*7,textScaler: 1.3,),
+        topMenu: ApplicationBar(height:SizeConfig.getDynamicBlocSize(context: context)*7,textScaler: 1.2,),
         menuWidget: SideBarMenu(
           width: SizeConfig.getDynamicBlocSize(context: context)*7,
         background: AppColors.mainPrimaryBlack,

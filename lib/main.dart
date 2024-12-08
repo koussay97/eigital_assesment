@@ -1,5 +1,7 @@
+import 'package:eigital_assessment/app_bloc/app_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/brand_guideline/brand_guideline.dart';
 import 'responsive_pan.dart';
@@ -8,7 +10,11 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle( SystemUiOverlayStyle(
     statusBarColor: AppColors.mainPrimaryBlack,
   ));
-  runApp(const MyApp());
+
+
+  runApp( BlocProvider(
+      create: (context) => AppBloc()..add(LoadUsersData()),
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -20,28 +26,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      title: 'Flutter Text',
+      title: 'Cool App',
      // debugShowMaterialGrid: true,
       theme: AppTheme.currentTheme(context: context,textScaler: 1),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const ResponsivePan(),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-
-  @override
-  Widget build(BuildContext context) {
-    return const ResponsivePan();
   }
 }
