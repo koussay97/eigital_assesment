@@ -10,12 +10,13 @@ class MiniSectionWidget extends StatelessWidget {
 
   final double? scaleFactor;
   final ThemeData themeData;
-
+  final bool hideBtn;
   final String iconName;
   final String iconTitle;
   final String btnLabel;
   const MiniSectionWidget(
       {super.key,
+        required this.hideBtn,
         required this.iconName,
         required this.iconTitle,
         required this.themeData,
@@ -65,6 +66,7 @@ class MiniSectionWidget extends StatelessWidget {
                       iconTitle),
                 ],
               ),
+              hideBtn?const SizedBox.shrink():
               ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor: WidgetStatePropertyAll(AppColors.mainPrimaryBlack),

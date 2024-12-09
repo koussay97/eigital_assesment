@@ -26,6 +26,8 @@ class NotesCard extends StatelessWidget {
         ),
         BigWhiteCard(
           tabContent: ListView.separated(
+            scrollDirection: Axis.vertical,
+              physics: const  NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 return Padding(

@@ -37,18 +37,26 @@ class CenterPanContent extends StatelessWidget {
 
             SizedBox(height: SizeConfig.getDynamicBlocSize(context: context)*2,),
             MiniSectionWidget(
+              hideBtn: false,
               themeData: currentTheme,
               scaleFactor: textScaler,
               title: 'Allergy',btnLabel: 'Add',iconName: AssetAccessor.storeIcon,iconTitle: 'No Allergies',),
             SizedBox(height: SizeConfig.getDynamicBlocSize(context: context)*2,),
             MiniSectionWidget(
+              hideBtn: false,
               themeData: currentTheme,
               scaleFactor: textScaler,
               title: 'Upcoming Visits',btnLabel: 'Book A Visit',iconName: AssetAccessor.forkKnifeIcon,iconTitle: 'No Upcoming Visits',),
             SizedBox(height: SizeConfig.getDynamicBlocSize(context: context)*2,),
-
             NotesCard(currentTheme: currentTheme,
             textScaleFactor: textScaler,),
+            SizedBox(height: SizeConfig.getDynamicBlocSize(context: context)*2,),
+            MiniSectionWidget(
+              hideBtn: true,
+              themeData: currentTheme,
+              scaleFactor: textScaler,
+              title: 'Recent Orders',btnLabel: '--',iconName: AssetAccessor.spoonKnifeIcon,iconTitle: 'No Recent Orders to Show',),
+
           ],
         ),
       ),
