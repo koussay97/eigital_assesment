@@ -4,6 +4,7 @@ import 'package:eigital_assessment/core/responsive_layout/responsive_componenet.
 import 'package:eigital_assessment/widgets/center_panel_widgets/guest_book_card.dart';
 import 'package:eigital_assessment/widgets/center_panel_widgets/tab_bar_component.dart';
 import 'package:eigital_assessment/widgets/mini_sctionCard_widget.dart';
+import 'package:eigital_assessment/widgets/notes_card.dart';
 import 'package:flutter/material.dart';
 
 class CenterPanContent extends StatelessWidget {
@@ -44,7 +45,10 @@ class CenterPanContent extends StatelessWidget {
               themeData: currentTheme,
               scaleFactor: textScaler,
               title: 'Upcoming Visits',btnLabel: 'Book A Visit',iconName: AssetAccessor.forkKnifeIcon,iconTitle: 'No Upcoming Visits',),
+            SizedBox(height: SizeConfig.getDynamicBlocSize(context: context)*2,),
 
+            NotesCard(currentTheme: currentTheme,
+            textScaleFactor: textScaler,),
           ],
         ),
       ),

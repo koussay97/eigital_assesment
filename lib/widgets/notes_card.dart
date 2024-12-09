@@ -8,47 +8,65 @@ class NotesCard extends StatelessWidget {
   final ThemeData currentTheme;
   final double? textScaleFactor;
   const NotesCard({super.key, required this.currentTheme, required this.textScaleFactor});
-
+  static List<String> keysList =['General','Special Relation','Seating Preferences', 'Special notes', 'Allergies'];
   @override
   Widget build(BuildContext context) {
-    return BigWhiteCard(
-      tabContent: ListView.separated(
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: SizeConfig.getDynamicBlocSize(context: context),
-                    vertical: SizeConfig.getDynamicBlocSize(context: context)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Notes',
+          style: currentTheme.textTheme.labelMedium?.copyWith(
+            color: AppColors.cardSecondaryLabelColor,
+          ),
+          textScaler: TextScaler.linear((textScaleFactor ?? 1)),
+        ),
+        SizedBox(
+          height: SizeConfig.getDynamicBlocSize(context: context),
+        ),
+        BigWhiteCard(
+          tabContent: ListView.separated(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SizeConfig.getDynamicBlocSize(context: context),
+                        vertical: SizeConfig.getDynamicBlocSize(context: context)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        AssetAccessor.drawSvgIcon(
-                            iconName: AssetAccessor.notesIcons[index],
-                            height: SizeConfig.getDynamicBlocSize(
-                                    context: context) *
-                                2,
-                            width: SizeConfig.getDynamicBlocSize(
-                                    context: context) *
-                                2),
-                        Text('General', style: currentTheme.textTheme.labelLarge?.copyWith(color: AppColors.cardLabelColor),)
+                        Row(
+                          children: [
+                            AssetAccessor.drawSvgIcon(
+                                iconName: AssetAccessor.notesIcons[index],
+                                height: SizeConfig.getDynamicBlocSize(
+                                        context: context) *
+                                    2,
+                                width: SizeConfig.getDynamicBlocSize(
+                                        context: context) *
+                                    2),
+                            SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
+                            Text(keysList[index],
+                              textScaler: TextScaler.linear((textScaleFactor??1)),
+                              style: currentTheme.textTheme.labelLarge?.copyWith(color: AppColors.cardLabelColor),)
+                          ],
+                        ),
+                        SizedBox(
+                          height: SizeConfig.getDynamicBlocSize(context: context),
+                        ),
+                        Text('Add notes', style: currentTheme.textTheme.labelSmall?.copyWith(color: AppColors.cardSecondaryLabelColor),)
                       ],
-                    ),
-                    SizedBox(
-                      height: SizeConfig.getDynamicBlocSize(context: context),
-                    ),
-
-                  ],
-                ));
-          },
-          separatorBuilder: (context, index) {
-            return Divider(
-              color: AppColors.cardSecondaryLabelColor,
-            );
-          },
-          itemCount: AssetAccessor.notesIcons.length),
+                    ));
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  color: AppColors.cardSecondaryLabelColor,
+                );
+              },
+              itemCount: AssetAccessor.notesIcons.length),
+        ),
+      ],
     );
   }
 }
