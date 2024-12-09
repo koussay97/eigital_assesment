@@ -15,7 +15,7 @@ class NotesCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Notes',
+          'Notes'.toUpperCase(),
           style: currentTheme.textTheme.labelMedium?.copyWith(
             color: AppColors.cardSecondaryLabelColor,
           ),

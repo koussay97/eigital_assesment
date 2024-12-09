@@ -7,6 +7,7 @@ part 'app_event.dart';
 part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
+
   /// i already know that persisting the data in bloc as an instance member is a bad practice !! but this is just an example
   /// we could persist the list locally or use a hydrated bloc that caches the states
   List<UserClass> currentlyLoadedUsers = [];

@@ -54,9 +54,9 @@ class MiniSectionWidget extends StatelessWidget {
                   AssetAccessor.drawSvgIcon(
                       iconName: iconName,
                       height:
-                      SizeConfig.getDynamicBlocSize(context: context) * 3*(scaleFactor??1),
+                      SizeConfig.getDynamicBlocSize(context: context) * 2*(scaleFactor??1),
                       width:
-                      SizeConfig.getDynamicBlocSize(context: context) * 3*(scaleFactor??1)),
+                      SizeConfig.getDynamicBlocSize(context: context) * 2*(scaleFactor??1)),
 
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: SizeConfig.getDynamicBlocSize(context: context)*2),

@@ -26,8 +26,8 @@ abstract class AssetAccessor {
   static String forkKnifeIcon = 'assets/icons/0forkKnife.svg';
   static String guestBookIcon = 'assets/icons/0guestBook.svg';
   static String pieIcon = 'assets/icons/0pieIcon.svg';
-  static String emptyReviewIcon = 'assets/icons/0reviewEmptyIcon.svg';
-  static String storeIcon = 'assets/icons/0forkKnife.svg';
+  static String emptyReviewIcon = 'assets/icons/0reviewEmptyIcom.svg';
+  static String storeIcon = 'assets/icons/0StoreIcon.svg';
   static String spoonKnifeIcon = 'assets/icons/0spoonKnife.svg';
 
   /// notes icons
@@ -48,7 +48,7 @@ abstract class AssetAccessor {
   static String socialGoogleSvgIcon='assets/icons/social_icons/socialGoogle.svg';
   static String socialBrustImage='assets/icons/social_icons/socialBrust.png';
   static String socialFourSquareImage='assets/icons/social_icons/socialFourSquare.png';
-  static String socialZagatImage='assets/icons/social_icons/socialZagat.svg';
+  static String socialZagatImage='assets/icons/social_icons/socialZagat.png';
 
   /// mock profile images
   static String imageMainProfile = 'assets/mock_profile_images/mainProfileimage.png';
@@ -73,11 +73,11 @@ abstract class AssetAccessor {
 
   static Image drawImage({
     required String imageName,
-    required double height,
-    required double width,
-    required BoxFit fit
+     double? height,
+     double? width,
+     BoxFit? fit
   }) {
-    return Image.asset('name', height: height, width: width, fit: fit,);
+    return Image.asset(imageName, height: height, width: width, fit: fit,);
   }
   
   static double appPadding({required BuildContext context})=> SizeConfig.getDynamicBlocSize(context: context)*2;
