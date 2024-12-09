@@ -27,8 +27,6 @@ class CenterPanContent extends StatelessWidget {
             SizedBox(height: appBarHeight,),
             GuestBookCard(currentTheme: currentTheme,textScaler:textScaler ,),
             Center(child: TabBarComponent(scaleFactor: (textScaler??1),)),
-
-
           ],
         ),
       ),

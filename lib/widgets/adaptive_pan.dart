@@ -73,7 +73,7 @@ class _AdaptivePanelWidgetState extends State<AdaptivePanelWidget> with SingleTi
                       child: widget.leftPanelWidgetContent!,
                       builder: (context,child,) {
                         return SizedBox(
-                          width: (MediaQuery.sizeOf(context).width/22)*animation.value,
+                          width: (MediaQuery.sizeOf(context).width/25)*animation.value,
                           child: Transform.scale(
                               alignment: Alignment.centerLeft,
                               origin: Offset.zero,

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class DataKeyValVertical extends StatelessWidget {
   final double? scaleFactor;
-  final bool showDivider;
+
   final double? value;
   final String label;
   final bool isCurrencyValue;
@@ -18,7 +18,7 @@ class DataKeyValVertical extends StatelessWidget {
 
   const DataKeyValVertical({
     super.key,
-    required this.showDivider,
+
     required this.isDateTimeValue,
     this.lastVisit,
     required this.theme,
@@ -36,7 +36,7 @@ class DataKeyValVertical extends StatelessWidget {
         Text(
           overflow: TextOverflow.ellipsis,
           textScaler: TextScaler.linear((scaleFactor ?? 1)),
-          '${isCurrencyValue ? '\$${value?.truncate()}.${((value?.remainder((value?.truncate() ?? 0)) ?? 0).isNaN ? 0 : value?.remainder((value?.truncate() ?? 0))).toString().padLeft(2, '0')}' : isDateTimeValue ? formatDate(date: lastVisit) : value?.round()}',
+          '${isCurrencyValue ? '\$${value?.toString().padRight(2, '0')}' : isDateTimeValue ? formatDate(date: lastVisit) : value?.round()}',
           style: theme.textTheme.headlineMedium
               ?.copyWith(color: AppColors.mainPrimaryBlack),
         ),

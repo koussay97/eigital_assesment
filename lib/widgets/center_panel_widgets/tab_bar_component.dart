@@ -1,13 +1,19 @@
+import 'package:eigital_assessment/app_bloc/app_bloc.dart';
 import 'package:eigital_assessment/core/brand_guideline/brand_guideline.dart';
 import 'package:eigital_assessment/core/responsive_layout/responsive_componenet.dart';
 import 'package:eigital_assessment/domain/user_model.dart';
-import 'package:eigital_assessment/widgets/center_panel_widgets/bottom_cards_wrapper.dart';
-import 'package:eigital_assessment/widgets/center_panel_widgets/custom_vertical_divider.dart';
-import 'package:eigital_assessment/widgets/center_panel_widgets/top_expanded_card.dart';
+import 'package:eigital_assessment/widgets/center_panel_widgets/tab_view_widgets/bottom_cards.dart';
+import 'package:eigital_assessment/widgets/center_panel_widgets/tab_view_widgets/bottom_cards_wrapper.dart';
+import 'package:eigital_assessment/widgets/center_panel_widgets/tab_view_widgets/custom_vertical_divider_atom.dart';
+import 'package:eigital_assessment/widgets/center_panel_widgets/tab_view_widgets/inner_card_molecule.dart';
+import 'package:eigital_assessment/widgets/center_panel_widgets/tab_view_widgets/top_expanded_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TabBarComponent extends StatefulWidget {
   final double? scaleFactor;
+
   const TabBarComponent({super.key, this.scaleFactor});
 
   @override
@@ -19,13 +25,13 @@ class _TabBarComponentState extends State<TabBarComponent>
   late final TabController tabController;
 
   late int tabIndex;
+
   @override
   void initState() {
     tabIndex = 0;
     tabController = TabController(length: 5, vsync: this);
     super.initState();
   }
-
 
   static List<String> tabs = [
     "Profile",
@@ -42,16 +48,15 @@ class _TabBarComponentState extends State<TabBarComponent>
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(
                   AssetAccessor.cardRadius(context: context))),
           child: TabBar(
-            onTap: (index){
+            onTap: (index) {
               setState(() {
-                tabIndex=index;
+                tabIndex = index;
               });
             },
             physics: const NeverScrollableScrollPhysics(),
@@ -88,42 +93,96 @@ class _TabBarComponentState extends State<TabBarComponent>
         const SizedBox(
           height: 30,
         ),
-        SizedBox(
-          height: SizeConfig.getDynamicBlocSize(context: context)*30,
-          child: TabBarView(
-            controller: tabController,
-              children: [
-                TapViewItemCard(
-                  tabContent: ProfileTabViewItem(
-                    showRightPortion: false,
-                    fill: true,
-                    currentTheme: currentTheme,
-                    scaleFactor: widget.scaleFactor,
-                  ),
-                ),
-                 TapViewItemCard(
-                  tabContent: Center(
-                    child: Text('${tabs[tabIndex]}'),
-                  ),
-                ),
-                TapViewItemCard(
-                  tabContent: Center(
-                    child: Text('${tabs[tabIndex]}'),
-                  ),
-                ),
-                TapViewItemCard(
-                  tabContent: Center(
-                    child: Text('${tabs[tabIndex]}'),
-                  ),
-                ),
-                TapViewItemCard(
-                  tabContent: Center(
-                    child: Text('${tabs[tabIndex]}'),
-                  ),
-                ),
-              ]),
-        ),
+        BlocBuilder<AppBloc, AppState>(
+            buildWhen: (prevState, currentState) =>
+                currentState is LoadUsersDataLoadingState ||
+                currentState is LoadUsersDataSuccessState ||
+                currentState is PickUserState ||
+                currentState is OpenedGuestBookState,
+            builder: (context, state) {
+              if (state is LoadUsersDataLoadingState || state is AppInitial) {
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey.shade300,
+                  highlightColor: Colors.grey.shade100,
+                  child: SizedBox(
+                      height: SizeConfig.getDynamicBlocSize(context: context) * 40,
+                      child: const TapViewItemCard()),
+                );
+              }
 
+              if (state is PickUserState) {
+                return SizedBox(
+                  height: SizeConfig.getDynamicBlocSize(context: context) * 30,
+                  child: TabBarView(controller: tabController, children: [
+                    TapViewItemCard(
+                      tabContent: ProfileTabViewItem(
+                        userModel: state.pickedUser,
+                        showRightPortion: true,
+                        fill: true,
+                        currentTheme: currentTheme,
+                        scaleFactor: widget.scaleFactor,
+                      ),
+                    ),
+                    TapViewItemCard(
+                      tabContent: Center(
+                        child: Text('${tabs[tabIndex]}'),
+                      ),
+                    ),
+                    TapViewItemCard(
+                      tabContent: Center(
+                        child: Text('${tabs[tabIndex]}'),
+                      ),
+                    ),
+                    TapViewItemCard(
+                      tabContent: Center(
+                        child: Text('${tabs[tabIndex]}'),
+                      ),
+                    ),
+                    TapViewItemCard(
+                      tabContent: Center(
+                        child: Text('${tabs[tabIndex]}'),
+                      ),
+                    ),
+                  ]),
+                );
+              }
+              return SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 40,
+                child: TabBarView(controller: tabController, children: [
+                  TapViewItemCard(
+                    tabContent: ProfileTabViewItem(
+                      userModel: state.users.firstWhere(
+                          (e) => e.id == context.read<AppBloc>().lastSelectedId,
+                          orElse: () => state.users[0]),
+                      showRightPortion: false,
+                      fill: true,
+                      currentTheme: currentTheme,
+                      scaleFactor: widget.scaleFactor,
+                    ),
+                  ),
+                  TapViewItemCard(
+                    tabContent: Center(
+                      child: Text('${tabs[tabIndex]}'),
+                    ),
+                  ),
+                  TapViewItemCard(
+                    tabContent: Center(
+                      child: Text('${tabs[tabIndex]}'),
+                    ),
+                  ),
+                  TapViewItemCard(
+                    tabContent: Center(
+                      child: Text('${tabs[tabIndex]}'),
+                    ),
+                  ),
+                  TapViewItemCard(
+                    tabContent: Center(
+                      child: Text('${tabs[tabIndex]}'),
+                    ),
+                  ),
+                ]),
+              );
+            }),
       ],
     );
   }
@@ -131,6 +190,7 @@ class _TabBarComponentState extends State<TabBarComponent>
 
 class TapViewItemCard extends StatelessWidget {
   final Widget? tabContent;
+
   const TapViewItemCard({super.key, this.tabContent});
 
   @override
@@ -138,8 +198,8 @@ class TapViewItemCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(
-            AssetAccessor.cardRadius(context: context)),
+        borderRadius:
+            BorderRadius.circular(AssetAccessor.cardRadius(context: context)),
         color: AppColors.cardsHighlightColor,
       ),
       child: tabContent,
@@ -147,9 +207,8 @@ class TapViewItemCard extends StatelessWidget {
   }
 }
 
-
-
 class ProfileTabViewItem extends StatelessWidget {
+  final UserClass userModel;
   final ThemeData currentTheme;
   final bool fill;
   final bool showRightPortion;
@@ -157,6 +216,7 @@ class ProfileTabViewItem extends StatelessWidget {
 
   const ProfileTabViewItem(
       {super.key,
+      required this.userModel,
       required this.fill,
       this.scaleFactor,
       required this.currentTheme,
@@ -176,16 +236,29 @@ class ProfileTabViewItem extends StatelessWidget {
                   width: SizeConfig.getDynamicBlocSize(context: context) * 4,
                   height: SizeConfig.getDynamicBlocSize(context: context) * 4,
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(color: Colors.white60.withOpacity(0.3))
-                      ],
-                      shape: BoxShape.circle,
-                      image:
-                          DecorationImage(image: AssetImage(users[0].image!))),
+                    boxShadow: [
+                      BoxShadow(color: Colors.white60.withOpacity(0.3))
+                    ],
+                    shape: BoxShape.circle,
+                    color: userModel.image == null
+                        ? AppColors.cardLabelColor
+                        : null,
+                    image: userModel.image != null
+                        ? DecorationImage(image: AssetImage(userModel.image!))
+                        : null,
+                  ),
+                  child: userModel.image == null
+                      ? Center(
+                          child: Text(
+                          '${userModel.name.substring(0, 2).toUpperCase()}',
+                          style: currentTheme.textTheme.bodySmall
+                              ?.copyWith(color: AppColors.cardsHighlightColor),
+                        ))
+                      : null,
                 ),
                 Text(
                   textAlign: TextAlign.center,
-                  users[0].name,
+                  userModel.name,
                   textScaler: TextScaler.linear((scaleFactor ?? 1)),
                   style: currentTheme.textTheme.headlineMedium
                       ?.copyWith(color: AppColors.mainPrimaryBlack),
@@ -197,14 +270,14 @@ class ProfileTabViewItem extends StatelessWidget {
                 Text(
                     textAlign: TextAlign.center,
                     textScaler: TextScaler.linear((scaleFactor ?? 1)),
-                    users[0].email,
+                    userModel.email,
                     style: currentTheme.textTheme.labelSmall
                         ?.copyWith(color: AppColors.mainPrimaryBlack),
                     overflow: TextOverflow.ellipsis),
                 Text(
                   textAlign: TextAlign.center,
                   textScaler: TextScaler.linear((scaleFactor ?? 1)),
-                  users[0].phoneNumber,
+                  userModel.phoneNumber,
                   style: currentTheme.textTheme.labelSmall
                       ?.copyWith(color: AppColors.mainPrimaryBlack),
                   overflow: TextOverflow.ellipsis,
@@ -227,9 +300,13 @@ class ProfileTabViewItem extends StatelessWidget {
               ],
             )),
         CustomVerticalDivider(
-          height: SizeConfig.getDynamicBlocSize(context: context)*25,
-          color:AppColors.cardSecondaryLabelColor ,thickness: 1,),
-         SizedBox(width: SizeConfig.getDynamicBlocSize(context: context)*2,),
+          height: SizeConfig.getDynamicBlocSize(context: context) * 25,
+          color: AppColors.cardSecondaryLabelColor,
+          thickness: 1,
+        ),
+        SizedBox(
+          width: SizeConfig.getDynamicBlocSize(context: context) * 2,
+        ),
         Expanded(
             flex: 7,
             child: Column(
@@ -237,26 +314,43 @@ class ProfileTabViewItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 TabViewMidSectionUpperCard(
+                  data: [
+                    {'Last Visit': userModel.lastVisit},
+                    {'Average Spent': userModel.averageSpent},
+                    {'Lifetime Spent': userModel.lifetimeSpent},
+                    {'Total Orders': userModel.totalOrders},
+                    {'Average Tip': userModel.averageTip},
+                  ],
                   theme: currentTheme,
                   scaleFactor: scaleFactor,
                 ),
                 SizedBox(
-                  height: SizeConfig.getDynamicBlocSize(context: context),
+                  height: SizeConfig.getDynamicBlocSize(context: context) * 2,
                 ),
-                 TabViewMidSectionLowerCards(
+                TabViewMidSectionLowerCards(
+                  userModel: userModel,
                   theme: currentTheme,
-                   scaleFactor: scaleFactor,
-                )
+                  scaleFactor: scaleFactor,
+                ),
+                (!showRightPortion)
+                    ? BottomCards(currentTheme: currentTheme,scaleFactor:scaleFactor,)
+                    : const SizedBox.shrink(),
               ],
             )),
         showRightPortion
-            ? CustomVerticalDivider(
-          height: SizeConfig.getDynamicBlocSize(context: context)*25,
-          color:AppColors.cardSecondaryLabelColor ,thickness: 1,)
-
+            ? Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal:
+                        SizeConfig.getDynamicBlocSize(context: context) * 2),
+                child: CustomVerticalDivider(
+                  height: SizeConfig.getDynamicBlocSize(context: context) * 25,
+                  color: AppColors.cardSecondaryLabelColor,
+                  thickness: 1,
+                ),
+              )
             : const SizedBox.shrink(),
         showRightPortion
-            ? Expanded(flex: 3, child: Container())
+            ? Expanded(flex: 3, child: OtherCards(currentTheme: currentTheme,scaleFactor: scaleFactor,))
             : const SizedBox.shrink(),
       ],
     );

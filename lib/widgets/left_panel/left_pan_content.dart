@@ -8,9 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-
-
-//////////// screen
 class FirstPanContent extends StatelessWidget {
   final double? textScaler;
 
@@ -89,13 +86,13 @@ class FirstPanContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
              Expanded(
-               flex: 1,
-               child: Row(
-                 mainAxisSize: MainAxisSize.min,
-                 children: [
-                 Expanded(
-                   flex: 10,
-                   child: Container(
+               flex: 2,
+               child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                 child: Row(
+                   mainAxisSize: MainAxisSize.min,
+                   children: [
+                   Container(
                      padding: EdgeInsets.all(SizeConfig.getDynamicBlocSize(context: context)),
                      decoration: BoxDecoration(
                        color: AppColors.mainPrimaryBlack,
@@ -103,25 +100,21 @@ class FirstPanContent extends StatelessWidget {
                      ),
                      child: Icon(Icons.add, color: AppColors.cardsHighlightColor,size: SizeConfig.getDynamicBlocSize(context: context)*2),
                    ),
-                 ),
-                   const Expanded(flex: 1,child: SizedBox(width: 10,),),
-                   Expanded(
-                       flex: 10,
-                   child: GestureDetector(
-                     onTap: (){
-
-                     },
-                     child: Container(
-                       padding: EdgeInsets.all(SizeConfig.getDynamicBlocSize(context: context)),
-                       decoration: BoxDecoration(
-                         color: AppColors.cardLabelColor,
-                         borderRadius: BorderRadius.circular(10),
+                     SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
+                     GestureDetector(
+                       onTap: (){},
+                       child: Container(
+                         padding: EdgeInsets.all(SizeConfig.getDynamicBlocSize(context: context)),
+                         decoration: BoxDecoration(
+                           color: AppColors.cardLabelColor,
+                           borderRadius: BorderRadius.circular(10),
+                         ),
+                         child: Icon(Icons.archive_outlined, color: AppColors.cardsHighlightColor,size: SizeConfig.getDynamicBlocSize(context: context)*2),
                        ),
-                       child: Icon(Icons.archive_outlined, color: AppColors.cardsHighlightColor,size: SizeConfig.getDynamicBlocSize(context: context)*2),
-                     ),
-                   ),)
+                     )
 
-                 ],),
+                   ],),
+               ),
              ),
                 Flexible(
                     flex: 3,
@@ -146,9 +139,7 @@ class FirstPanContent extends StatelessWidget {
             BlocBuilder<AppBloc,AppState>(
 
               builder: (context,state) {
-                debugPrint('---------------------------');
-                debugPrint(state.toString());
-                debugPrint('---------------------------');
+
 
                 if(state is LoadUsersDataLoadingState||state is AppInitial ){
                   return ListView.separated(

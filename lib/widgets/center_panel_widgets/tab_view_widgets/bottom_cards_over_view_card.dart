@@ -5,14 +5,11 @@ import 'package:flutter/material.dart';
 class OverViewCardContent extends StatelessWidget {
   final ThemeData theme;
   final double? scaleFactor;
-  const OverViewCardContent({super.key, required this.theme, this.scaleFactor});
+  final List<Map<String, dynamic>>data;
 
-  static List<Map<String, dynamic>> data = [
-    {'Loyalty NO': 'RF|'},
-    {'Customer Since': DateTime( 2010,2, 10)},
-    {'Birth Date': '--'},
-    {'Anniversary': DateTime( 2003,11, 11)},
-  ];
+  const OverViewCardContent({super.key, required this.theme, this.scaleFactor, required this.data});
+
+
 
   @override
   Widget build(BuildContext context) {

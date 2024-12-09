@@ -120,9 +120,9 @@ class UserClass {
       image: image ?? this.image,
       name: name ?? this.name,
       lastVisit: lastVisit ?? this.lastVisit,
-      customerSince: customerSince ?? this.customerSince,
-      birthday: birthday ?? this.birthday,
-      anniversary: anniversary ?? this.anniversary,
+      customerSince: customerSince ,
+      birthday: birthday,
+      anniversary: anniversary ,
       averageSpent: averageSpent ?? this.averageSpent,
       lifetimeSpent: lifetimeSpent ?? this.lifetimeSpent,
       averageTip: averageTip ?? this.averageTip,
@@ -140,6 +140,7 @@ class UserClass {
 
 }
 
+/// static user data :::
  List<UserClass> users = [
   UserClass.empty().copyWith(
 lastVisit: DateTime(2000, 4,2),

@@ -11,6 +11,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   /// we could persist the list locally or use a hydrated bloc that caches the states
   List<UserClass> currentlyLoadedUsers = [];
   SortType? lastSortType;
+  String lastSelectedId='';
   AppBloc() : super(AppInitial()) {
     on<AppEvent>((event, emit) async {
       if (event is LoadUsersData) {
@@ -20,8 +21,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         emit(LoadUsersDataSuccessState(users: currentlyLoadedUsers));
       } else if (event is PickUser) {
         /// this state must close the GuestBook + returns the current user data to the center pan
-        /// why the delay? because we want to change the tile background color before we animate
-        await Future.delayed(const Duration(milliseconds: 300));
+      lastSelectedId = event.userId;
         emit(PickUserState(
             pickedUser: currentlyLoadedUsers
                 .firstWhere((el) => el.id == event.userId)));
