@@ -36,6 +36,13 @@ abstract class AssetAccessor {
   static String noteSeatingPrefs = 'assets/icons/notes_icons/notesSeatingPrefs.svg';
   static String noteSpecial = 'assets/icons/notes_icons/notesSpecial.svg';
   static String noteAllergy = 'assets/icons/notes_icons/notesAllergy.svg';
+  static List<String> notesIcons =[
+    noteGeneral,
+    noteSpecialRelation,
+    noteSeatingPrefs,
+    noteSpecial,
+    noteAllergy
+  ];
 
   /// social icons and images ::
   static String socialGoogleSvgIcon='assets/icons/social_icons/socialGoogle.svg';

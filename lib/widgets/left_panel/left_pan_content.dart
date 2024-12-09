@@ -2,7 +2,6 @@ import 'package:eigital_assessment/app_bloc/app_bloc.dart';
 import 'package:eigital_assessment/core/brand_guideline/asset_accessor.dart';
 import 'package:eigital_assessment/core/brand_guideline/brand_guideline.dart';
 import 'package:eigital_assessment/core/responsive_layout/responsive_componenet.dart';
-import 'package:eigital_assessment/domain/user_model.dart';
 import 'package:eigital_assessment/widgets/left_panel/cutom_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

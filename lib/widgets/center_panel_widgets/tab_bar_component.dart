@@ -106,7 +106,7 @@ class _TabBarComponentState extends State<TabBarComponent>
                   highlightColor: Colors.grey.shade100,
                   child: SizedBox(
                       height: SizeConfig.getDynamicBlocSize(context: context) * 40,
-                      child: const TapViewItemCard()),
+                      child: const BigWhiteCard()),
                 );
               }
 
@@ -114,7 +114,7 @@ class _TabBarComponentState extends State<TabBarComponent>
                 return SizedBox(
                   height: SizeConfig.getDynamicBlocSize(context: context) * 30,
                   child: TabBarView(controller: tabController, children: [
-                    TapViewItemCard(
+                    BigWhiteCard(
                       tabContent: ProfileTabViewItem(
                         userModel: state.pickedUser,
                         showRightPortion: true,
@@ -123,22 +123,22 @@ class _TabBarComponentState extends State<TabBarComponent>
                         scaleFactor: widget.scaleFactor,
                       ),
                     ),
-                    TapViewItemCard(
+                    BigWhiteCard(
                       tabContent: Center(
                         child: Text('${tabs[tabIndex]}'),
                       ),
                     ),
-                    TapViewItemCard(
+                    BigWhiteCard(
                       tabContent: Center(
                         child: Text('${tabs[tabIndex]}'),
                       ),
                     ),
-                    TapViewItemCard(
+                    BigWhiteCard(
                       tabContent: Center(
                         child: Text('${tabs[tabIndex]}'),
                       ),
                     ),
-                    TapViewItemCard(
+                    BigWhiteCard(
                       tabContent: Center(
                         child: Text('${tabs[tabIndex]}'),
                       ),
@@ -149,7 +149,7 @@ class _TabBarComponentState extends State<TabBarComponent>
               return SizedBox(
                 height: SizeConfig.getDynamicBlocSize(context: context) * 40,
                 child: TabBarView(controller: tabController, children: [
-                  TapViewItemCard(
+                  BigWhiteCard(
                     tabContent: ProfileTabViewItem(
                       userModel: state.users.firstWhere(
                           (e) => e.id == context.read<AppBloc>().lastSelectedId,
@@ -160,22 +160,22 @@ class _TabBarComponentState extends State<TabBarComponent>
                       scaleFactor: widget.scaleFactor,
                     ),
                   ),
-                  TapViewItemCard(
+                  BigWhiteCard(
                     tabContent: Center(
                       child: Text('${tabs[tabIndex]}'),
                     ),
                   ),
-                  TapViewItemCard(
+                  BigWhiteCard(
                     tabContent: Center(
                       child: Text('${tabs[tabIndex]}'),
                     ),
                   ),
-                  TapViewItemCard(
+                  BigWhiteCard(
                     tabContent: Center(
                       child: Text('${tabs[tabIndex]}'),
                     ),
                   ),
-                  TapViewItemCard(
+                  BigWhiteCard(
                     tabContent: Center(
                       child: Text('${tabs[tabIndex]}'),
                     ),
@@ -188,10 +188,10 @@ class _TabBarComponentState extends State<TabBarComponent>
   }
 }
 
-class TapViewItemCard extends StatelessWidget {
+class BigWhiteCard extends StatelessWidget {
   final Widget? tabContent;
 
-  const TapViewItemCard({super.key, this.tabContent});
+  const BigWhiteCard({super.key, this.tabContent});
 
   @override
   Widget build(BuildContext context) {
