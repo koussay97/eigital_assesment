@@ -3,9 +3,10 @@ import 'package:eigital_assessment/core/responsive_layout/responsive_componenet.
 import 'package:flutter/material.dart';
 class ApplicationBar extends StatelessWidget {
   final VoidCallback? onTapMenuBtn;
+  final bool forceHide;
   final double? textScaler;
   final double height;
-  const ApplicationBar({super.key, required this.height,this.textScaler, this.onTapMenuBtn});
+  const ApplicationBar({super.key,required this.forceHide, required this.height,this.textScaler, this.onTapMenuBtn});
 
   @override
   Widget build(BuildContext context) {
@@ -61,18 +62,21 @@ class ApplicationBar extends StatelessWidget {
                          ],
                        ),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(getFormattedTime(DateTime.now()),style: currentTheme.textTheme.displayLarge?.copyWith(color: AppColors.cardsHighlightColor),textScaler: TextScaler.linear(textScaler??1)),
-                            SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
-                            Icon(Icons.network_wifi_sharp, color: AppColors.cardsHighlightColor, size: SizeConfig.getDynamicBlocSize(context: context)*3,),
-                            SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
-                            Icon(Icons.notifications_none, color: AppColors.cardsHighlightColor,size: SizeConfig.getDynamicBlocSize(context: context)*3,),
-                          ],
+                      Visibility(
+                        visible: !forceHide,
+                        child: Align(
+                          alignment: Alignment.centerRight,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(getFormattedTime(DateTime.now()),style: currentTheme.textTheme.displayLarge?.copyWith(color: AppColors.cardsHighlightColor),textScaler: TextScaler.linear(textScaler??1)),
+                              SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
+                              Icon(Icons.network_wifi_sharp, color: AppColors.cardsHighlightColor, size: SizeConfig.getDynamicBlocSize(context: context)*3,),
+                              SizedBox(width: SizeConfig.getDynamicBlocSize(context: context),),
+                              Icon(Icons.notifications_none, color: AppColors.cardsHighlightColor,size: SizeConfig.getDynamicBlocSize(context: context)*3,),
+                            ],
+                          ),
                         ),
                       )
                      ],

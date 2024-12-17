@@ -55,3 +55,9 @@ final class SortUsersResultState extends AppState{
   @override
   List<Object?> get props => [sortedUsers];
 }
+final class CloseGuestBookState extends AppState{
+  const CloseGuestBookState({required super.users});
+
+  @override
+  List<Object?> get props => [super.users];
+}

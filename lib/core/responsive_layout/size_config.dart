@@ -22,7 +22,9 @@ abstract class SizeConfig {
     if(viewportWidth<viewportHeight){
       return viewportWidth/100;
     }
-    return viewportHeight/100;
+    return viewportWidth/100;
+
+    // return ((viewportHeight+viewportWidth)/2)/100;
   }
 
   /// use this whenever you do have screen resizing therefore you need to rebuild the ui constraints

@@ -18,17 +18,20 @@ static  GlobalKey<ScaffoldState> scaffoldKey =GlobalKey<ScaffoldState>();
       androidMobile: AdaptivePanelWidget(
         scaffoldKey: scaffoldKey,
         topMenu: ApplicationBar(
+          forceHide: true,
           onTapMenuBtn: (){
             scaffoldKey.currentState?.openDrawer();
           },
           height:SizeConfig.getDynamicBlocSize(context: context)*10,textScaler: 1.5,),
         numberOfColumns: 1,
-        centerPanelWidgetContent: Center(),
+        centerPanelWidgetContent:  Center(child: Text('this is not yet implemented', style: Theme.of(context).textTheme.headlineLarge,),),
         leftPanExpanded: true,
       ),
 
       androidTablet: AdaptivePanelWidget(
-        topMenu: ApplicationBar(height:SizeConfig.getDynamicBlocSize(context: context)*7,textScaler: 1.2,),
+        topMenu: ApplicationBar(
+          forceHide: false,
+          height:SizeConfig.getDynamicBlocSize(context: context)*7,textScaler: 1.2,),
         menuWidget: SideBarMenu(
           width: SizeConfig.getDynamicBlocSize(context: context)*7,
         background: AppColors.mainPrimaryBlack,
@@ -39,7 +42,9 @@ static  GlobalKey<ScaffoldState> scaffoldKey =GlobalKey<ScaffoldState>();
         leftPanExpanded: true,),
 
       windowsDesktop: AdaptivePanelWidget(
-        topMenu: ApplicationBar(height:SizeConfig.getDynamicBlocSize(context: context)*6,),
+        topMenu: ApplicationBar(
+          forceHide: false,
+          height:SizeConfig.getDynamicBlocSize(context: context)*6,),
           menuWidget: SideBarMenu(
             width: SizeConfig.getDynamicBlocSize(context: context)*6,
             background: AppColors.mainPrimaryBlack,

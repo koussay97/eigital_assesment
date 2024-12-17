@@ -54,6 +54,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           lastSortType= SortType.desc;
         }
         emit(SortUsersResultState(sortedUsers: currentlyLoadedUsers));
+      }else if (event is CloseGuestBook){
+        emit(CloseGuestBookState(users: currentlyLoadedUsers));
       }
     });
   }

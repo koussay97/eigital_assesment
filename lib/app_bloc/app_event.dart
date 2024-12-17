@@ -25,6 +25,13 @@ class OpenGuestBook extends AppEvent {
   List<Object?> get props => [];
 }
 
+class CloseGuestBook extends AppEvent {
+  const CloseGuestBook();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class FilterUsers extends AppEvent {
   final String? filterString;
 

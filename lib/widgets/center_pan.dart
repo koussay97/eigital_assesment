@@ -19,71 +19,79 @@ class CenterPanContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: appBarHeight,
-            ),
-            GuestBookCard(
-              currentTheme: currentTheme,
-              textScaler: textScaler,
-            ),
-            Center(
-                child: TabBarComponent(
-              scaleFactor: (textScaler ?? 1),
-            )),
-            SizedBox(
-              height: SizeConfig.getDynamicBlocSize(context: context) * 2,
-            ),
-            MiniSectionWidget(
-              hideBtn: false,
-              themeData: currentTheme,
-              scaleFactor: textScaler,
-              title: 'Allergy'.toUpperCase(),
-              btnLabel: 'Add',
-              iconName: AssetAccessor.forkKnifeIcon,
-              iconTitle: 'No Allergies',
-            ),
-            SizedBox(
-              height: SizeConfig.getDynamicBlocSize(context: context) * 2,
-            ),
-            MiniSectionWidget(
-              hideBtn: false,
-              themeData: currentTheme,
-              scaleFactor: textScaler,
-              title: 'Upcoming Visits'.toUpperCase(),
-              btnLabel: 'Book A Visit',
-              iconName: AssetAccessor.storeIcon,
-              iconTitle: 'No Upcoming Visits',
-            ),
-            SizedBox(
-              height: SizeConfig.getDynamicBlocSize(context: context) * 2,
-            ),
-            NotesCard(
-              currentTheme: currentTheme,
-              textScaleFactor: textScaler,
-            ),
-            SizedBox(
-              height: SizeConfig.getDynamicBlocSize(context: context) * 2,
-            ),
-            MiniSectionWidget(
-              hideBtn: true,
-              themeData: currentTheme,
-              scaleFactor: textScaler,
-              title: 'Recent Orders'.toUpperCase(),
-              btnLabel: '--',
-              iconName: AssetAccessor.spoonKnifeIcon,
-              iconTitle: 'No Recent Orders to Show',
-            ),
-            SizedBox(
-              height: SizeConfig.getDynamicBlocSize(context: context) * 2,
-            ),
-            ReviewBox(currentTheme: currentTheme,textScaler: textScaler,),
-          ],
+    return GestureDetector(
+      onTap: (){
+        BlocProvider.of<AppBloc>(context).add(const CloseGuestBook());
+      },
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(AssetAccessor.appPadding(context: context)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: appBarHeight,
+              ),
+              GuestBookCard(
+                currentTheme: currentTheme,
+                textScaler: textScaler,
+              ),
+              Center(
+                  child: TabBarComponent(
+                scaleFactor: (textScaler ?? 1),
+              )),
+              SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 2,
+              ),
+              MiniSectionWidget(
+                hideBtn: false,
+                themeData: currentTheme,
+                scaleFactor: textScaler,
+                title: 'Allergy'.toUpperCase(),
+                btnLabel: 'Add',
+                iconName: AssetAccessor.forkKnifeIcon,
+                iconTitle: 'No Allergies',
+              ),
+              SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 2,
+              ),
+              MiniSectionWidget(
+                hideBtn: false,
+                themeData: currentTheme,
+                scaleFactor: textScaler,
+                title: 'Upcoming Visits'.toUpperCase(),
+                btnLabel: 'Book A Visit',
+                iconName: AssetAccessor.storeIcon,
+                iconTitle: 'No Upcoming Visits',
+              ),
+              SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 2,
+              ),
+              NotesCard(
+                currentTheme: currentTheme,
+                textScaleFactor: textScaler,
+              ),
+              SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 2,
+              ),
+              MiniSectionWidget(
+                hideBtn: true,
+                themeData: currentTheme,
+                scaleFactor: textScaler,
+                title: 'Recent Orders'.toUpperCase(),
+                btnLabel: '--',
+                iconName: AssetAccessor.spoonKnifeIcon,
+                iconTitle: 'No Recent Orders to Show',
+              ),
+              SizedBox(
+                height: SizeConfig.getDynamicBlocSize(context: context) * 2,
+              ),
+              ReviewBox(
+                currentTheme: currentTheme,
+                textScaler: textScaler,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -114,7 +122,7 @@ class ReviewBox extends StatelessWidget {
               );
             }
             return Column(
-   crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Recent Reviews'.toUpperCase(),
@@ -124,98 +132,138 @@ class ReviewBox extends StatelessWidget {
                   textScaler: TextScaler.linear((textScaler ?? 1)),
                 ),
                 SizedBox(
-                  height: SizeConfig.getDynamicBlocSize(context: context)*2,
+                  height: SizeConfig.getDynamicBlocSize(context: context) * 2,
                 ),
                 SizedBox(
-                  height: SizeConfig.getDynamicBlocSize(context: context)*20,
-
-                  child:ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: state.pickedUser.reviews!.length,
-                      shrinkWrap: true,
-                      separatorBuilder: (context, index) {
-                        return SizedBox(
-                          width: SizeConfig.getDynamicBlocSize(context: context) * 5,
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        if (index == 0) {
-                          /// google image is svg and its on index 0
-                          return BigWhiteCard(
-                            tabContent: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                AssetAccessor.drawSvgIcon(
-                                    iconName: state.pickedUser.reviews![0].reviewImage,
-                                    height: SizeConfig.getDynamicBlocSize(
-                                        context: context) *
-                                        3,
-                                    width: SizeConfig.getDynamicBlocSize(
-                                        context: context) *
-                                        3),
-                                SizedBox(height: SizeConfig.getDynamicBlocSize(context: context),),
-                                Rating(rating: state.pickedUser.reviews![0].reviewRating),
-                                SizedBox(height: SizeConfig.getDynamicBlocSize(context: context),),
-                                SizedBox(
-                                  width: SizeConfig.getDynamicBlocSize(context: context)*20,
-                                  child: Row(
+                    height:
+                        SizeConfig.getDynamicBlocSize(context: context) * 22,
+                    child:Column(
+                      children: [
+                        Expanded(
+                          child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.pickedUser.reviews!.length,
+                              shrinkWrap: true,
+                              separatorBuilder: (context, index) {
+                                return SizedBox(
+                                  width: SizeConfig.getDynamicBlocSize(
+                                      context: context) *
+                                      5,
+                                );
+                              },
+                              itemBuilder: (context, index) {
+                                if (index == 0) {
+                                  /// google image is svg and its on index 0
+                                  return BigWhiteCard(
+                                    tabContent: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        AssetAccessor.drawSvgIcon(
+                                            iconName: state
+                                                .pickedUser.reviews![0].reviewImage,
+                                            height: SizeConfig.getDynamicBlocSize(
+                                                context: context) *
+                                                3,
+                                            width: SizeConfig.getDynamicBlocSize(
+                                                context: context) *
+                                                3),
+                                        SizedBox(
+                                          height: SizeConfig.getDynamicBlocSize(
+                                              context: context),
+                                        ),
+                                        Rating(
+                                            rating: state
+                                                .pickedUser.reviews![0].reviewRating),
+                                        SizedBox(
+                                          height: SizeConfig.getDynamicBlocSize(
+                                              context: context),
+                                        ),
+                                        SizedBox(
+                                          width: SizeConfig.getDynamicBlocSize(
+                                              context: context) *
+                                              20,
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  maxLines: 4,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.center,
+                                                  textScaler: TextScaler.linear(
+                                                      (textScaler ?? 1)),
+                                                  state.pickedUser.reviews![0]
+                                                      .reviewMessage,
+                                                  style: currentTheme
+                                                      .textTheme.bodyMedium
+                                                      ?.copyWith(
+                                                      color: AppColors
+                                                          .cardLabelColor),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }
+                                return BigWhiteCard(
+                                  tabContent: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                        child: Text(
-                                          maxLines: 5,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          textScaler: TextScaler.linear((textScaler??1)),
-                                          state.pickedUser.reviews![0].reviewMessage, style: currentTheme.textTheme.bodyMedium?.copyWith(
-                                            color: AppColors.cardLabelColor
-                                        ),),
+                                      AssetAccessor.drawImage(
+                                          fit: BoxFit.contain,
+                                          imageName: state
+                                              .pickedUser.reviews![index].reviewImage,
+                                          height: SizeConfig.getDynamicBlocSize(
+                                              context: context) *
+                                              3,
+                                          width: SizeConfig.getDynamicBlocSize(
+                                              context: context) *
+                                              3),
+                                      SizedBox(
+                                        height: SizeConfig.getDynamicBlocSize(
+                                            context: context),
+                                      ),
+                                      Rating(
+                                          rating: state.pickedUser.reviews![index]
+                                              .reviewRating),
+                                      SizedBox(
+                                        height: SizeConfig.getDynamicBlocSize(
+                                            context: context),
+                                      ),
+                                      SizedBox(
+                                        width: SizeConfig.getDynamicBlocSize(
+                                            context: context) *
+                                            20,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                maxLines: 4,
+                                                overflow: TextOverflow.ellipsis,
+                                                textAlign: TextAlign.center,
+                                                textScaler: TextScaler.linear(
+                                                    (textScaler ?? 1)),
+                                                state.pickedUser.reviews![index]
+                                                    .reviewMessage,
+                                                style: currentTheme
+                                                    .textTheme.bodyMedium
+                                                    ?.copyWith(
+                                                    color:
+                                                    AppColors.cardLabelColor),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-
-                              ],
-                            ),
-                          );
-                        }
-                        return  BigWhiteCard(
-                          tabContent: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              AssetAccessor.drawImage(
-                                  fit: BoxFit.contain,
-                                  imageName: state.pickedUser.reviews![index].reviewImage,
-                                  height: SizeConfig.getDynamicBlocSize(
-                                      context: context) *
-                                      3,
-                                  width: SizeConfig.getDynamicBlocSize(
-                                      context: context) *
-                                      3),
-                              SizedBox(height: SizeConfig.getDynamicBlocSize(context: context),),
-                              Rating(rating: state.pickedUser.reviews![index].reviewRating),
-                              SizedBox(height: SizeConfig.getDynamicBlocSize(context: context),),
-                              SizedBox(
-                                width: SizeConfig.getDynamicBlocSize(context: context)*20,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        maxLines: 5,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.center,
-                                        textScaler: TextScaler.linear((textScaler??1)),
-                                        state.pickedUser.reviews![index].reviewMessage, style: currentTheme.textTheme.bodyMedium?.copyWith(
-                                          color: AppColors.cardLabelColor
-                                      ),),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      })
-                ),
+                                );
+                              }),
+                        )
+                      ],
+                    )),
               ],
             );
           }
@@ -231,8 +279,10 @@ class ReviewBox extends StatelessWidget {
         });
   }
 }
+
 class Rating extends StatelessWidget {
   final int rating;
+
   const Rating({super.key, required this.rating});
 
   @override
@@ -241,17 +291,24 @@ class Rating extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-
-        for(int i =0;i<=rating;i++)
-        Padding(
-            padding: EdgeInsets.only(right: SizeConfig.getDynamicBlocSize(context: context)),
-            child: const Icon(Icons.star, color: Colors.amber,)),
-        if(5-rating>0)
-        for(int j=0; j<=(5-rating);j++)
+        for (int i = 0; i <= rating; i++)
           Padding(
-              padding: EdgeInsets.only(right: SizeConfig.getDynamicBlocSize(context: context)),
-              child:  Icon(Icons.star_outline_outlined, color: AppColors.cardLabelColor,)),
-
-      ],);
+              padding: EdgeInsets.only(
+                  right: SizeConfig.getDynamicBlocSize(context: context)),
+              child: const Icon(
+                Icons.star,
+                color: Colors.amber,
+              )),
+        if (5 - rating > 0)
+          for (int j = 0; j <= (5 - rating); j++)
+            Padding(
+                padding: EdgeInsets.only(
+                    right: SizeConfig.getDynamicBlocSize(context: context)),
+                child: Icon(
+                  Icons.star_outline_outlined,
+                  color: AppColors.cardLabelColor,
+                )),
+      ],
+    );
   }
 }

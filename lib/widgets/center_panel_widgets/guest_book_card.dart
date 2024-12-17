@@ -16,7 +16,7 @@ class GuestBookCard extends StatelessWidget {
       children: [
         BlocBuilder<AppBloc,AppState>(
             builder: (context,state) {
-              if(state is PickUserState){
+              if(state is PickUserState || state is CloseGuestBookState){
                 return InkWell(
                   onTap: (){
                     BlocProvider.of<AppBloc>(context).add(const OpenGuestBook());

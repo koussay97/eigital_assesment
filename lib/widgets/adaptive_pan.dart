@@ -45,7 +45,7 @@ class _AdaptivePanelWidgetState extends State<AdaptivePanelWidget> with SingleTi
   Widget build(BuildContext context) {
     return BlocListener<AppBloc,AppState>(
       listener: (context,state)async {
-        if(state is PickUserState){
+        if(state is PickUserState || state is CloseGuestBookState){
           await animationController.reverse();
         }else if (state is OpenedGuestBookState || state is LoadUsersDataSuccessState || state is LoadUsersDataLoadingState){
           await animationController.forward();
