@@ -28,7 +28,8 @@ I am currently developing a **stream-based solution** that minimizes rebuilds by
 ### 🔗 Resources  
 
 - [**Repository Link**](#)  
-- [**Figma Template**](https://www.figma.com/design/SI7RibZRiLQGlXJJrWJCRR/Dev---Interview-Task?node-id=1-446)  
+- [**Figma Template**](https://www.figma.com/design/SI7RibZRiLQGlXJJrWJCRR/Dev---Interview-Task?node-id=1-446)
+- [**Video Demo**](https://2ly.link/23JyT)
 
 ⭐ If you find it helpful, please leave a star and share your feedback!  
 (📄 I understand the documentation is minimal at the moment, so your input will be invaluable. 🙏)  
